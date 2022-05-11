@@ -10,4 +10,12 @@ const getUser = async () => {
     return getAll;
 };
 
+// const getUserById = async () => {
+
+// };
+
+// const updateUser = async () => {
+
+// };
+
 module.exports = { createUser, getUser };

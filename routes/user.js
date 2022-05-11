@@ -1,9 +1,10 @@
 const express = require('express');
 
 const router = express.Router();
+const m = require('../middlewares/validateUser');
+const { userPost, getUser } = require('../controllers/userController');
 
-const { userPost } = require('../controllers/userController');
-
-router.post('/', userPost);
+router.post('/', m.emailAlreadyExist, m.emailRegx, m.passwordAndName, userPost);
+router.get('/', getUser);
 
 module.exports = router;
