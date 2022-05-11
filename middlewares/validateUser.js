@@ -1,21 +1,31 @@
 const { getUser } = require('../services/userService');
 
-const passwordAndName = (req, res, next) => {
-  const { displayName, password } = req.body;
-  if (displayName.length <= 8 && displayName !== 'string') {
-    return res.status(422).json({ message: 'DisplayName must be at least 8 chars' });
-  } if (password.length !== 6) {
-    return res.status(422).json({ message: 'Password must be 6 chars' });
+const validateDisplay = (req, res, next) => {
+  const { displayName } = req.body;
+    if (displayName.length <= 8 && displayName !== 'string') {
+    res.status(400).json({ message: '"displayName" length must be at least 8 characters long' });
   }
-next();
+  next();
 };
 
+const validatePassword = (req, res, next) => {
+  const { password } = req.body;
+  console.log(password, 'password');
+  if (password === undefined) {
+    console.log(password);
+    return res.status(400).json({ message: '"password" is required' });
+  }
+  if (password.length !== 6) {
+    return res.status(400).json({ message: '"password" length must be 6 characters long' });
+  } 
+  next();
+};
 const emailAlreadyExist = async (req, res, next) => {
   const { email } = req.body;
   const allUsers = await getUser();
   const verifyEmailInDB = allUsers.some((u) => u.email === email);
   if (verifyEmailInDB) {
-    return res.status(401).json({ message: 'User already registered' });
+    return res.status(409).json({ message: 'User already registered' });
   }
 next();
 };
@@ -24,11 +34,12 @@ const emailRegx = async (req, res, next) => {
   const { email } = req.body;
   const re = /\S+@\S+\.\S+/;
   const validate = re.test(email);
-  if (!email) return res.status(400).send({ message: 'The fild "email" is required' });
+  if (!email) return res.status(400).send({ message: '"email" is required' });
   if (!validate) {
     return res.status(400)
-    .json({ message: 'The "email" must have be this shape "email@email.com"' });
+    .json({ message: '"email" must be a valid email' });
   }
   next();
 };
-module.exports = { passwordAndName, emailAlreadyExist, emailRegx };
+
+module.exports = { validateDisplay, emailAlreadyExist, emailRegx, validatePassword };
