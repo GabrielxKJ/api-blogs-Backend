@@ -1,9 +1,9 @@
-// const express = require('express');
+const express = require('express');
 
-// const router = express.Router();
-// const m = require('../middlewares/validateLogin');
-// const { loginPost } = require('../controllers/loginController');
+const router = express.Router();
+const m = require('../middlewares/validateLogin');
+const { loginPost } = require('../controllers/loginController');
 
-// router.post('/', m.passwordValidate, m.emailValidate, m.userExist, loginPost);
+router.post('/', m.passwordValidate, m.emailValidate, m.userExist, loginPost);
 
-// module.exports = router;
+module.exports = router;
