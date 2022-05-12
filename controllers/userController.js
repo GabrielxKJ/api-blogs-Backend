@@ -10,7 +10,7 @@ const userPost = async (req, res) => {
 
 const getUser = async (_req, res) => {
   const allUsers = await userService.getUser();
-  res.status(200).json(allUsers);
+  return res.status(200).json(allUsers);
 };
 
 module.exports = {

@@ -8,10 +8,7 @@ const emailValidate = (req, res, next) => {
   if (email === '') {
     return res.status(400).json({ message: '"email" is not allowed to be empty' });
   }
-  if (email === null) {
-    return res.status(400).json({ message: 'Invalid fields' });
-  }
-    next();
+  next();
 };
 
 const passwordValidate = (req, res, next) => {
