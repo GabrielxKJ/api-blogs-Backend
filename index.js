@@ -4,12 +4,12 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const userRoute = require('./routes/user');
-const loginRoute = require('./routes/login');
+// const loginRoute = require('./routes/login');
 
 app.use(bodyParser.json());
 
 app.use('/user', userRoute);
-app.use('/login', loginRoute);
+// app.use('/login', loginRoute);
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
 // não remova esse endpoint, e para o avaliador funcionar

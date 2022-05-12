@@ -5,7 +5,7 @@ const userPost = async (req, res) => {
   const { displayName, email, password, image } = req.body;
   await userService.createUser(displayName, email, password, image);
   const token = getToken(email, password);
-  res.status(201).json(token);
+  res.status(201).json({ token });
 };
 
 const getUser = async (_req, res) => {

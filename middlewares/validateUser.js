@@ -10,7 +10,6 @@ const validateDisplay = (req, res, next) => {
 
 const validatePassword = (req, res, next) => {
   const { password } = req.body;
-  console.log(password, 'password');
   if (password === undefined) {
     console.log(password);
     return res.status(400).json({ message: '"password" is required' });
