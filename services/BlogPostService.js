@@ -9,4 +9,14 @@ const getAllPosts = async () => {
   return allpost;
 };
 
-module.exports = { getAllPosts };
+const findBlogById = async (id) => {
+  const result = await BlogPost.findOne({ 
+    where: { id },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Categorie, as: 'categories', through: { attributes: [] } },
+  ] });
+  return result;
+};
+
+module.exports = { getAllPosts, findBlogById };
