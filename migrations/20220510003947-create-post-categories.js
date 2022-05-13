@@ -13,7 +13,7 @@ module.exports = {
         allowNull: false,
         references: {
           key: 'id',
-          model: 'BlogsPosts',
+          model: 'BlogPosts',
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
