@@ -8,4 +8,16 @@ const validateBlogsId = async (req, res, next) => {
   next();
 };
 
-module.exports = { validateBlogsId };
+const validatePostUser = async (req, res, next) => {
+  const userId = req.user;
+ const { id } = req.params;
+  const result = await BlogPost.findOne({
+  where: { userId, id },
+  });
+  if (!result) {
+    return res.status(401).json({ message: 'Unauthorized user' });
+  }
+  next();
+};
+
+module.exports = { validateBlogsId, validatePostUser };

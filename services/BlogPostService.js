@@ -1,4 +1,4 @@
-const { BlogPost, User, Categorie } = require('../models');
+const { BlogPost, User, Categorie } = require('../models'); 
 
 const getAllPosts = async () => {
   const allpost = await BlogPost.findAll({ 
@@ -19,4 +19,8 @@ const findBlogById = async (id) => {
   return result;
 };
 
-module.exports = { getAllPosts, findBlogById };
+const deleteBlog = async (id) => {
+  await BlogPost.destroy({ where: { id } });
+};
+
+module.exports = { getAllPosts, findBlogById, deleteBlog };
