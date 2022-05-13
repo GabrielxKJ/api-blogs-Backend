@@ -1,4 +1,5 @@
-const { getUser, findUserById } = require('../services/userService');
+const { getUser } = require('../services/userService');
+const { User } = require('../models');
 
 const validateDisplay = (req, res, next) => {
   const { displayName } = req.body;
@@ -44,9 +45,9 @@ const emailRegx = async (req, res, next) => {
 
 const userNotExist = async (req, res, next) => {
   const { id } = req.params;
-  const userIn = await findUserById(id);
+  const userIn = await User.findByPk(id);
   if (!userIn) {
-    return res.staus(401).json({ message: 'User does not exist' });
+    return res.status(404).json({ message: 'User does not exist' });
   }
   next();
 };
