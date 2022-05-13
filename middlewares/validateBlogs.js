@@ -29,7 +29,7 @@ const canNotBeEdited = (req, res, next) => {
     return res.status(400).json({ message: '"content" is required' });
   }
   if (categoryIds) {
-    return res.status(400).json({ message: '"Categories" cannot be edited' });
+    return res.status(400).json({ message: 'Categories cannot be edited' });
   }
   next();
 };
