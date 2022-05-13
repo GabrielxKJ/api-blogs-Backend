@@ -1,5 +1,5 @@
 const {
-   getAllPosts, findBlogById, deleteBlog, updateBlogs,
+   getAllPosts, findBlogById, deleteBlog, updateBlogs, queryPost,
    } = require('../services/BlogPostService');
 
 const getBlogPost = async (_req, res) => {
@@ -27,4 +27,9 @@ const putBlogPost = async (req, res) => {
   return res.status(200).json(postUpdated);
 };
 
-module.exports = { getBlogPost, getBlogById, deleteBlogPost, putBlogPost };
+const searchTerm = async (req, res) => { 
+  const search = await queryPost(req.query);
+  return res.status(200).json(search);
+};
+
+module.exports = { getBlogPost, getBlogById, deleteBlogPost, putBlogPost, searchTerm };
