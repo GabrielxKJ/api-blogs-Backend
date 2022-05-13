@@ -1,8 +1,8 @@
 const { getToken } = require('../auth/token');
 
 const loginPost = (req, res) => {
-  const { email, password } = req.body;
-  const token = getToken(email, password);
+  const { email } = req.body;
+  const token = getToken(email);
   return res.status(200).json({ token });
 };
 

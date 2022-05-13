@@ -1,24 +1,29 @@
-const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const User = require('../models');
+const jwt = require('jsonwebtoken');
+const { User } = require('../models');
+
+const secret = process.env.JWT_SECRET;
 
 const verifyToken = async (req, res, next) => {
-  const { authotization } = req.headers;
-  if (!authotization) {
+  const token = req.headers.authorization;
+
+  if (!token) {
     return res.status(401).json({ message: 'Token not found' });
   }
+
   try {
-    const decoded = jwt.verify(authotization, process.env.JWT_SECRET);
-    const user = await User.findOne({ where: { email: decoded.data.email } });
-    console.log(user, 'user');
+    const decoded = jwt.verify(token, secret);
+    console.log(decoded);
+    const user = await User.findOne({ where: { email: decoded.email } });
     if (!user) {
       return res.status(401).json({ message: 'Expired or invalid token' });
-    } 
-    req.user = user.datavalues.id;
-    next();
-  } catch (e) {
-   return res.status(401).json({ message: e }); 
+    }
+    req.user = user.dataValues.id;
+  } catch (error) {
+    console.log(error);
+    return res.status(401).json({ message: 'Expired or invalid token' });
   }
-};
+  next();
+}; 
 
 module.exports = { verifyToken };

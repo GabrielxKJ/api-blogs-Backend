@@ -1,4 +1,4 @@
-const { getUser } = require('../services/userService');
+const { getUser, findUserById } = require('../services/userService');
 
 const validateDisplay = (req, res, next) => {
   const { displayName } = req.body;
@@ -42,4 +42,13 @@ const emailRegx = async (req, res, next) => {
   next();
 };
 
-module.exports = { validateDisplay, emailAlreadyExist, emailRegx, validatePassword };
+const userNotExist = async (req, res, next) => {
+  const { id } = req.params;
+  const userIn = await findUserById(id);
+  if (!userIn) {
+    return res.staus(401).json({ message: 'User does not exist' });
+  }
+  next();
+};
+
+module.exports = { validateDisplay, emailAlreadyExist, emailRegx, validatePassword, userNotExist };

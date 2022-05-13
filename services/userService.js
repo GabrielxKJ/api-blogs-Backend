@@ -10,12 +10,15 @@ const getUser = async () => {
     return getAll;
 };
 
-// const getUserById = async () => {
-
-// };
+const findUserById = async (id) => {
+    const getById = await User.findByPk(id, {
+        attributes: { exclude: ['passoword'] },
+    });
+    return getById;
+};
 
 // const updateUser = async () => {
 
 // };
 
-module.exports = { createUser, getUser };
+module.exports = { createUser, getUser, findUserById };
