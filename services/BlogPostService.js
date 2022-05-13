@@ -19,8 +19,19 @@ const findBlogById = async (id) => {
   return result;
 };
 
+const updateBlogs = async (id, title, content) => {
+  const updateBlog = await BlogPost.findByPk(id, { include: [
+    { model: Categorie, as: 'categories', through: { attributes: [] } },
+  ] });
+
+  updateBlog.set({ title, content });
+  await updateBlog.save();
+
+  return updateBlog;
+};
+
 const deleteBlog = async (id) => {
   await BlogPost.destroy({ where: { id } });
 };
 
-module.exports = { getAllPosts, findBlogById, deleteBlog };
+module.exports = { getAllPosts, findBlogById, deleteBlog, updateBlogs };

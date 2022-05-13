@@ -1,4 +1,6 @@
-const { getAllPosts, findBlogById, deleteBlog } = require('../services/BlogPostService');
+const {
+   getAllPosts, findBlogById, deleteBlog, updateBlogs,
+   } = require('../services/BlogPostService');
 
 const getBlogPost = async (_req, res) => {
   const allBlogs = await getAllPosts();
@@ -17,4 +19,12 @@ const deleteBlogPost = async (req, res) => {
  return res.status(204).end();
 };
 
-module.exports = { getBlogPost, getBlogById, deleteBlogPost };
+const putBlogPost = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user;
+  const { title, content } = req.body;
+  const postUpdated = await updateBlogs(id, title, content, userId);
+  return res.status(200).json(postUpdated);
+};
+
+module.exports = { getBlogPost, getBlogById, deleteBlogPost, putBlogPost };
