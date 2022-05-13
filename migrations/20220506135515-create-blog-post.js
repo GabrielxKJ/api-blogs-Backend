@@ -21,6 +21,8 @@ module.exports = {
           key: 'id',
           model: 'Users',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       published: {
         allowNull: false,
